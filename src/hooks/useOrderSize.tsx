@@ -21,23 +21,6 @@ export const OrderSizeContext = createContext({} as OrderSizeContextData);
 function OrderSizeProvider({ children }: OrderSizeProviderProps){
     const [dataOrder, setDataOrder] = useState<OrderSize[]>([]);
 
-    useEffect(() => {
-        const subscriber = firestore()
-            .collection('tables')
-            .orderBy('id')
-            .onSnapshot(querySnapshot => {
-                const dataOfOrders = querySnapshot.docs.map(doc => {
-                    return {
-                        ...doc.data()
-                    }
-                }) as OrderSize[];
-
-                setDataOrder(dataOfOrders);
-            })
-
-        return () => subscriber();      
-    }, [])
-
    return (
        <OrderSizeContext.Provider value={{
             dataOrder,

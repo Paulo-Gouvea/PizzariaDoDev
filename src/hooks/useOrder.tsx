@@ -23,23 +23,6 @@ export const OrderContext = createContext({} as OrderContextData);
 function OrderProvider({ children }: OrderProviderProps){
     const [data, setData] = useState<Product[]>([]);
 
-    useEffect(() => {
-        const subscriber = firestore()
-            .collection('tables')
-            .orderBy('id')
-            .onSnapshot(querySnapshot => {
-                const dataOfOrders = querySnapshot.docs.map(doc => {
-                    return {
-                        ...doc.data()
-                    }
-                }) as Product[];
-
-                setData(dataOfOrders);
-            })
-
-        return () => subscriber();      
-    }, [])
-
    return (
        <OrderContext.Provider value={{
             data,
